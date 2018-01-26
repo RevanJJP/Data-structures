@@ -60,19 +60,25 @@ test_Rotate3 = TestCase (do
   assertEqual "Rotated tree should look like its pattern." True (tree == treeRotated)
   )
 
+-- insert tests
 test_Insert1 = TestCase (do
   tree <- return (insert (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))) 6)
   treeResult <- return (BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 (EmptyBT) (BTNode 6 EmptyBT EmptyBT)))
   assertEqual "Rotated tree should look like its pattern." True (tree == treeResult)
   )
 
+-- insert and double rotation test
+test_Insert2 = TestCase (do
+  tree <- return (insert (BTNode 1 (EmptyBT) (BTNode 3 (EmptyBT) (EmptyBT))) 2)
+  treeResult <- return (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT))
+  assertEqual "Rotated tree should look like its pattern." True (tree == treeResult)
+  )
 
-
-
--- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
--- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))
--- BTNode 5 (BTNode 3 EmptyBT (BTNode 4 EmptyBT EmptyBT)) (EmptyBT)
--- BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT)
+test_Build = TestCase (do
+  tree <- return (buildTree [1..6])
+  pattern <- return (BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 (EmptyBT) (BTNode 6 EmptyBT EmptyBT)))
+  assertEqual "Built tree should look like its pattern." True (tree == pattern)
+  )
 
 avlTests = TestList [ -- balanced tests
                      test_IsBalanced1,
@@ -87,6 +93,16 @@ avlTests = TestList [ -- balanced tests
                      test_Rotate2,
                      test_Rotate3,
                      -- insert tests
-                     test_Insert1
+                     test_Insert1,
+                     test_Insert2,
                      -- buildTree tests
+                     test_Build
                      ]
+
+-- Examples used in testing
+-- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
+-- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))
+-- BTNode 5 (BTNode 3 EmptyBT (BTNode 4 EmptyBT EmptyBT)) (EmptyBT)
+-- BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT)
+-- BTNode 1 (EmptyBT) (BTNode 3 (EmptyBT) (EmptyBT))
+-- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)
