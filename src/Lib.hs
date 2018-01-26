@@ -32,6 +32,7 @@ performer = do
   timeIt $ print (search 0 avlTree)
 
 -------------------------------------------------------------------
+  putStrLn "\n"
   putStrLn "Rozmiar danych: 10000"
   let !binTree = (list2BST [1..10000])
   let !avlTree = (buildTree [1..10000])
