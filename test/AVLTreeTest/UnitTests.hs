@@ -46,6 +46,8 @@ test_Rotate1 = TestCase (do
   assertEqual "Rotated tree should look like its pattern." True (tree == treeRotated)
   )
 
+  BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
+
 avlTests = TestList [ -- balanced tests
                      test_IsBalanced1,
                      test_IsBalanced2,
