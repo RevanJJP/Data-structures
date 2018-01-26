@@ -40,13 +40,39 @@ test_IsBalanced7 = TestCase (do
   assertEqual "Not balanced tree shouldn't be detected as balanced." False (balanced tree)
   )
 
+-- single rotation tests
 test_Rotate1 = TestCase (do
   tree <- return (rotate (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT))))
   treeRotated <- return (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))
   assertEqual "Rotated tree should look like its pattern." True (tree == treeRotated)
   )
 
-  BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
+test_Rotate2 = TestCase (do
+  tree <- return (rotate (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))))
+  treeRotated <- return (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
+  assertEqual "Rotated tree should look like its pattern." True (tree == treeRotated)
+  )
+
+-- double rotation tests
+test_Rotate3 = TestCase (do
+  tree <- return (rotate (BTNode 5 (BTNode 3 EmptyBT (BTNode 4 EmptyBT EmptyBT)) (EmptyBT)))
+  treeRotated <- return (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))
+  assertEqual "Rotated tree should look like its pattern." True (tree == treeRotated)
+  )
+
+test_Insert1 = TestCase (do
+  tree <- return (insert (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))) 6)
+  treeResult <- return (BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 (EmptyBT) (BTNode 6 EmptyBT EmptyBT)))
+  assertEqual "Rotated tree should look like its pattern." True (tree == treeResult)
+  )
+
+
+
+
+-- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 (EmptyBT) (BTNode 4 (EmptyBT) (BTNode 5 EmptyBT EmptyBT)))
+-- BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT))
+-- BTNode 5 (BTNode 3 EmptyBT (BTNode 4 EmptyBT EmptyBT)) (EmptyBT)
+-- BTNode 4 (BTNode 3 EmptyBT EmptyBT) (BTNode 5 EmptyBT EmptyBT)
 
 avlTests = TestList [ -- balanced tests
                      test_IsBalanced1,
@@ -57,7 +83,10 @@ avlTests = TestList [ -- balanced tests
                      test_IsBalanced6,
                      test_IsBalanced7,
                      -- rotate tests
-                     test_Rotate1
+                     test_Rotate1,
+                     test_Rotate2,
+                     test_Rotate3,
                      -- insert tests
+                     test_Insert1
                      -- buildTree tests
                      ]
