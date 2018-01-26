@@ -1,9 +1,9 @@
 module BinTree.Internal where
 
 data BinTree a = EmptyBT | BTNode a (BinTree a) (BinTree a)
-  deriving (Eq, Ord, Show, Read)
+  deriving (Ord, Show, Read)
 
-height :: (Num a, Ord a) => BinTree a -> a
+height :: (Num b, Ord b) => BinTree a -> b
 height EmptyBT = 0
 height (BTNode _ lt rt) = 1 + max (height lt) (height rt)
 
@@ -40,3 +40,12 @@ postorder (BTNode val lt rt) = postorder lt ++ postorder rt ++ [val]
 preorder :: BinTree a -> [a]
 preorder EmptyBT = []
 preorder (BTNode val lt rt) = [val] ++ preorder lt ++ preorder rt
+
+ifEqBinTrees :: Eq a => BinTree a -> BinTree a -> Bool
+ifEqBinTrees EmptyBT (BTNode n lt rt) = False
+ifEqBinTrees (BTNode n lt rt) EmptyBT = False
+ifEqBinTrees EmptyBT EmptyBT = True
+ifEqBinTrees (BTNode n1 lt1 rt1) (BTNode n2 lt2 rt2) = n1 == n2 && (ifEqBinTrees lt1 lt2) && (ifEqBinTrees rt1 rt2)
+
+instance Eq a => Eq (BinTree a) where
+	(==) t1 t2 = ifEqBinTrees t1 t2
