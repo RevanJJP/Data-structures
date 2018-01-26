@@ -43,4 +43,4 @@ postorder (BTNode val lt rt) = postorder lt ++ postorder rt ++ [val]
 
 preorder :: BinTree a -> [a]
 preorder EmptyBT = []
-preorder (BTNode n lt rt) = [val] ++ preorder lt ++ preorder rt
+preorder (BTNode val lt rt) = [val] ++ preorder lt ++ preorder rt

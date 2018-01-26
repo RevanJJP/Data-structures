@@ -24,11 +24,13 @@ rotate (BTNode n lt rt) | not (balanced lt) = BTNode n (rotate lt) rt
                           = BTNode (value (right lt)) (BTNode (value lt) (left lt) (left (right lt))) (BTNode n (right (right lt)) rt)
                         | otherwise = BTNode n lt rt
 
+
 insert :: (Num a, Ord a) => BinTree a -> a -> BinTree a
 insert EmptyBT val = BTNode val EmptyBT EmptyBT
 insert (BTNode n lt rt) val
   | n < val = rotate ((BTNode n lt (insert rt val)))
   | otherwise = rotate (BTNode n (insert lt val) rt)
+
 
 buildTree :: (Num a, Ord a) => [a] -> BinTree a
 buildTree [] = EmptyBT

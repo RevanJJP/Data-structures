@@ -41,3 +41,31 @@ elemAtInd n xs = elemAtInd (n-1) (listTail xs)
 
 listInsert :: a -> MyList a -> MyList a
 listInsert x xs = Cons x xs
+
+insertInOrder :: (Ord a) =>  a -> MyList a -> MyList a
+insertInOrder x EmptyList = Cons x EmptyList
+insertInOrder x list = if x < (listHead list) then Cons x list
+                       else Cons (listHead list) (insertInOrder x (listTail list))
+
+endInsert :: a -> MyList a -> MyList a
+endInsert a EmptyList = Cons a EmptyList
+endInsert a list = listInsert (listHead list) (endInsert a (listTail list))
+
+listReverse :: MyList a -> MyList a
+listReverse EmptyList = EmptyList
+listReverse list = endInsert (listHead list) (listReverse (listTail list))
+
+listConcat :: MyList a -> MyList a -> MyList a
+listConcat list1 EmptyList = list1
+listConcat EmptyList list2 = list2
+listConcat (Cons a EmptyList) list2 = Cons a list2
+listConcat list1 (Cons a EmptyList) = Cons a list1
+listConcat list1 list2 = listInsert (listHead list2) (listConcat list1 (listTail list2))
+
+mapList :: (a -> b) -> MyList a -> MyList b
+mapList _ EmptyList = EmptyList
+mapList f (Cons x xs) = Cons (f x) (mapList f xs)
+
+sortList :: (Ord a) => MyList a -> MyList a -- insert sort na liście
+sortList EmptyList = EmptyList
+sortList list = insertInOrder (listHead list) (sortList (listTail list))
