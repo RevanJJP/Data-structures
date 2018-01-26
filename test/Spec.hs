@@ -7,3 +7,4 @@ import AVLTreeTest.UnitTests
 --main :: IO ()
 main = do
   runTestTT avlTests
+  runTestTT bstTests
