@@ -29,10 +29,6 @@ search val (BTNode n lt rt) = if val == n then True
                             else if val < n then search val lt
                             else search val rt
 
-sumBT :: (Num a) => BinTree a -> a
-sumBT EmptyBT = 0
-sumBT (BTNode n lt rt) = n + sumBT lt + sumBT rt
-
 inorder :: BinTree a -> [a]
 inorder EmptyBT = []
 inorder (BTNode val lt rt) = inorder lt ++ [val] ++ inorder rt
