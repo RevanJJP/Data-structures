@@ -65,9 +65,9 @@ preorder (BTNode val lt rt) = [val] ++ preorder lt ++ preorder rt
 
 -- | Checks if two BinTrees are equal, which means that they contain the same values.
 ifEqBinTrees :: Eq a => BinTree a -> BinTree a -> Bool
+ifEqBinTrees EmptyBT EmptyBT = True
 ifEqBinTrees EmptyBT (BTNode n lt rt) = False
 ifEqBinTrees (BTNode n lt rt) EmptyBT = False
-ifEqBinTrees EmptyBT EmptyBT = True
 ifEqBinTrees (BTNode n1 lt1 rt1) (BTNode n2 lt2 rt2) = n1 == n2 && (ifEqBinTrees lt1 lt2) && (ifEqBinTrees rt1 rt2)
 
 -- | Adding BinTree to class Eq.
