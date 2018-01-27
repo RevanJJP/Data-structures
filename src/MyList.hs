@@ -1,8 +1,26 @@
-{-| Module name: MyList
-  | Description: our own implementation of a list in Haskell
+{-|
+  Module name: MyList
+  Description: our own implementation of a list in Haskell
 -}
 
-module MyList where
+module MyList (
+  MyList,
+  listHead,
+  listTail,
+  listFind,
+  myListFromList,
+  myListToList,
+  listLength,
+  lastElem,
+  elemAtInd,
+  listInsert,
+  insertInOrder,
+  endInsert,
+  listReverse,
+  listConcat,
+  mapList,
+  sortList
+  ) where
 
 -- | Definition of our data type.
 data MyList a = EmptyList | Cons a (MyList a) deriving (Show, Eq)

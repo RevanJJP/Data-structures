@@ -1,11 +1,13 @@
-{-| Module name: Bintree.Internal
-  | Description: our own Haskell implementation of a Binary Search Trees, provides basic (common) features of 'BinTree' and 'AVLTree'.
+{-|
+  Module name: Bintree.Internal
+  Description: our own Haskell implementation of a Binary Search Trees, provides basic (common) features of 'BinTree' and 'AVLTree'.
 -}
 
 module BinTree.Internal where
 
 -- | Definition of 'BinTree' data type.
-data BinTree a = EmptyBT | BTNode a (BinTree a) (BinTree a)
+data BinTree a = EmptyBT -- ^ Empty node
+  | BTNode a (BinTree a) (BinTree a) -- ^ Node with a left and a right son
   deriving (Ord, Show, Read)
 
 -- | Returns height of the tree.
@@ -41,22 +43,22 @@ search val (BTNode n lt rt) = if val == n then True
                             else search val rt
 
 -- | Performs an inorder conversion to simple list, for example:
--- | inorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
--- | => [1, 2, 3, 4, 5, 6, 7]
+--  inorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
+--  => [1, 2, 3, 4, 5, 6, 7]
 inorder :: BinTree a -> [a]
 inorder EmptyBT = []
 inorder (BTNode val lt rt) = inorder lt ++ [val] ++ inorder rt
 
 -- | Performs a postorder conversion to simple list, for example:
--- | postorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
--- | => [1, 3, 2, 7, 6, 5, 4]
+-- postorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
+-- => [1, 3, 2, 7, 6, 5, 4]
 postorder :: BinTree a -> [a]
 postorder EmptyBT = []
 postorder (BTNode val lt rt) = postorder lt ++ postorder rt ++ [val]
 
 -- | Performs a preorder conversion to simple list, for example:
--- | preorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
--- | => [4, 2, 1, 3, 5, 6, 7]
+--  preorder BTNode 4 (BTNode 2 (BTNode 1 EmptyBT EmptyBT) (BTNode 3 EmptyBT EmptyBT)) (BTNode 5 EmptyBT (BTNode 6 EmptyBT (BTNode 7 EmptyBT EmptyBT)))
+--  => [4, 2, 1, 3, 5, 6, 7]
 preorder :: BinTree a -> [a]
 preorder EmptyBT = []
 preorder (BTNode val lt rt) = [val] ++ preorder lt ++ preorder rt

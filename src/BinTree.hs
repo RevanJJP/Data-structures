@@ -2,7 +2,14 @@
   | Description: our own Haskell implementation of a Binary Search Tree, uses features of 'BinTree.Internal'.
 -}
 
-module BinTree where
+module BinTree (
+  BinTree,
+  insert,
+  height,
+  list2BST,
+  sumBinTree,
+  mapBinTree
+    ) where
 
 import BinTree.Internal
 
@@ -25,6 +32,6 @@ sumBinTree (BTNode val lt rt) = val + sumBinTree lt + sumBinTree rt
 -- | Performs BinTree mapping, for example:
 -- | mapBinTree (^2) BTNode 7 (BTNode 6 EmptyBT EmptyBT) (BTNode 8 EmptyBT (BTNode 9 EmptyBT (BTNode 10 EmptyBT EmptyBT)))
 -- | => BTNode 49 (BTNode 36 EmptyBT EmptyBT) (BTNode 64 EmptyBT (BTNode 81 EmptyBT (BTNode 100 EmptyBT EmptyBT)))
-mapBinTree :: (a -> b) -> BinTree a -> BinTree b -- funkcja map dla drzewa binarnego
+mapBinTree :: (a -> b) -> BinTree a -> BinTree b -- map function for a binary tree
 mapBinTree _ EmptyBT = EmptyBT
 mapBinTree f (BTNode n lt rt) = BTNode (f n) (mapBinTree f lt) (mapBinTree f rt)
