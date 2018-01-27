@@ -3,27 +3,10 @@
   Description: our own implementation of a list in Haskell
 -}
 
-module MyList (
-  MyList,
-  listHead,
-  listTail,
-  listFind,
-  myListFromList,
-  myListToList,
-  listLength,
-  lastElem,
-  elemAtInd,
-  listInsert,
-  insertInOrder,
-  endInsert,
-  listReverse,
-  listConcat,
-  mapList,
-  sortList
-  ) where
+module MyList where
 
 -- | Definition of our data type.
-data MyList a = EmptyList | Cons a (MyList a) deriving (Show, Eq)
+data MyList a = EmptyList | Cons a (MyList a) deriving (Show)
 
 -- | Returns head of our list.
 listHead :: MyList a -> a
@@ -51,7 +34,7 @@ myListToList :: MyList a -> [a]
 myListToList EmptyList = []
 myListToList list = (listHead list) : (myListToList (listTail list))
 -- można też:
---myListToList (Cons x xs) = x : (myListToList xs)
+-- myListToList (Cons x xs) = x : (myListToList xs)
 
 -- | Returns length of a given list.
 listLength :: MyList a -> Int
@@ -86,7 +69,7 @@ endInsert a EmptyList = Cons a EmptyList
 endInsert a list = listInsert (listHead list) (endInsert a (listTail list))
 
 -- | Reverses whole 'MyList' list.
--- | Example (simplification):
+-- Example (simplification):
 -- listReverse [1, 2, 3, 4, 5] => [5, 4, 3, 2, 1]
 listReverse :: MyList a -> MyList a
 listReverse EmptyList = EmptyList
@@ -101,7 +84,7 @@ listConcat list1 (Cons a EmptyList) = Cons a list1
 listConcat list1 list2 = listInsert (listHead list2) (listConcat list1 (listTail list2))
 
 -- | Performs 'MyList''s mapping, for example (simplification):
--- | mapList (^2) [1, 2, 3, 4, 5] => [1, 4, 9, 16, 25]
+-- mapList (^2) [1, 2, 3, 4, 5] => [1, 4, 9, 16, 25]
 mapList :: (a -> b) -> MyList a -> MyList b
 mapList _ EmptyList = EmptyList
 mapList f (Cons x xs) = Cons (f x) (mapList f xs)
@@ -110,3 +93,13 @@ mapList f (Cons x xs) = Cons (f x) (mapList f xs)
 sortList :: (Ord a) => MyList a -> MyList a -- insert sort na liście
 sortList EmptyList = EmptyList
 sortList list = insertInOrder (listHead list) (sortList (listTail list))
+
+-- | Checks if two lists are equal.
+ifEqLists :: Eq a => MyList a -> MyList a -> Bool
+ifEqLists EmptyList EmptyList = True
+ifEqLists list1 list2 = if (listLength list1) /= (listLength list2) then False
+  else (listHead list1 == listHead list2) && (ifEqLists (listTail list1) (listTail list2))
+
+-- | Adding MyList to class Eq.
+instance Eq a => Eq (MyList a) where
+  (==) list1 list2 = ifEqLists list1 list2
