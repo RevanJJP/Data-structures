@@ -20,14 +20,14 @@ rotate :: (Num a, Ord a) => BinTree a -> BinTree a
 rotate EmptyBT = EmptyBT
 rotate (BTNode n lt rt) | not (balanced lt) = BTNode n (rotate lt) rt
                         | not (balanced rt) = BTNode n lt (rotate rt)
-                        | (height lt) + 1 < (height rt) && (height (left rt)) < (height (right rt))
+                        | (height lt) + 1 < (height rt) && (height (left rt)) < (height (right rt))  -- single RR
                           = BTNode (value rt) (BTNode n lt (left rt)) (right rt)
                         | (height rt) + 1 < (height lt) && (height (right lt)) < (height (left lt))
-                          = BTNode (value lt) (left lt) (BTNode n (right lt) rt)
+                          = BTNode (value lt) (left lt) (BTNode n (right lt) rt)  -- single LL
                         | (height lt) + 1 < (height rt) && (height (left rt)) > (height (right rt))
-                          = BTNode (value (left rt)) (BTNode n lt (left (left rt))) (BTNode (value rt) (right (left rt)) (right rt))
+                          = BTNode (value (left rt)) (BTNode n lt (left (left rt))) (BTNode (value rt) (right (left rt)) (right rt)) -- double RL
                         | (height rt) + 1 < (height lt) && (height (right lt)) > (height (left lt))
-                          = BTNode (value (right lt)) (BTNode (value lt) (left lt) (left (right lt))) (BTNode n (right (right lt)) rt)
+                          = BTNode (value (right lt)) (BTNode (value lt) (left lt) (left (right lt))) (BTNode n (right (right lt)) rt) -- double LR
                         | otherwise = BTNode n lt rt
 
 -- | Inserts single value into an AVLTree.
